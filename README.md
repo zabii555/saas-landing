@@ -1,16 +1,27 @@
-# React + Vite
+# SaaSPro - SaaS Landing Page & Onboarding Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+A modern, responsive frontend application for a SaaS product, including a landing page, multi-step customer onboarding portal, and analytics dashboard preview.
 
-Currently, two official plugins are available:
+## Tech Stack
+- React.js
+- React Router
+- Redux Toolkit
+- Tailwind CSS
+- Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- Responsive landing page with hero, features, testimonials, pricing, FAQ, and contact sections
+- Multi-step onboarding with form validation and progress indicator
+- Dashboard preview with analytics cards and recent activity
+- Dark/Light mode toggle
 
-## React Compiler
+## How to Run
+1. Clone the repository
+2. Run `npm install`
+3. Run `npm run dev`
+4. Open `http://localhost:5173`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Live Demo
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+https://saas-landing-blush-five.vercel.app/

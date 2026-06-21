@@ -20,13 +20,18 @@ const Onboarding = () => {
   const validateStep = () => {
     const newErrors = {}
     if (currentStep === 2) {
-      if (!formData.name) newErrors.name = 'Name is required'
-      if (!formData.email) newErrors.email = 'Email is required'
-      if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email'
-      if (!formData.company) newErrors.company = 'Company is required'
+      if (!formData.name || formData.name.trim() === '') newErrors.name = 'Full Name is required'
+      if (!formData.email || formData.email.trim() === '') {
+        newErrors.email = 'Email is required'
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email address'
+      }
+      if (!formData.company || formData.company.trim() === '') newErrors.company = 'Company name is required'
     }
     if (currentStep === 3) {
-      if (!formData.password || formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters'
+      if (!formData.password || formData.password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters'
+      }
     }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -46,11 +51,15 @@ const Onboarding = () => {
 
   const handleChange = (e) => {
     dispatch(updateForm({ [e.target.name]: e.target.value }))
+    // Clear error for this field when user starts typing
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' })
+    }
   }
 
   if (isComplete) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center">
+      <div className="min-h-[80vh] flex items-center justify-center px-4">
         <div className="text-center">
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-3xl font-bold mb-2">Onboarding Complete!</h2>
@@ -80,19 +89,47 @@ const Onboarding = () => {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">Your Information</h2>
             <div>
-              <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} className="w-full p-3 border rounded-lg dark:bg-gray-800" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none ${errors.name ? 'border-red-500' : ''}`}
+              />
               {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
             <div>
-              <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} className="w-full p-3 border rounded-lg dark:bg-gray-800" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none ${errors.email ? 'border-red-500' : ''}`}
+              />
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
             <div>
-              <input type="text" name="company" placeholder="Company Name" value={formData.company} onChange={handleChange} className="w-full p-3 border rounded-lg dark:bg-gray-800" />
+              <input
+                type="text"
+                name="company"
+                placeholder="Company Name"
+                value={formData.company}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none ${errors.company ? 'border-red-500' : ''}`}
+              />
               {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
             </div>
             <div>
-              <input type="text" name="role" placeholder="Your Role" value={formData.role} onChange={handleChange} className="w-full p-3 border rounded-lg dark:bg-gray-800" />
+              <input
+                type="text"
+                name="role"
+                placeholder="Your Role (Optional)"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+              />
             </div>
           </div>
         )
@@ -101,7 +138,14 @@ const Onboarding = () => {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">Create Account</h2>
             <div>
-              <input type="password" name="password" placeholder="Create Password" value={formData.password} onChange={handleChange} className="w-full p-3 border rounded-lg dark:bg-gray-800" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Create Password (min 6 characters)"
+                value={formData.password}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none ${errors.password ? 'border-red-500' : ''}`}
+              />
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>
             <p className="text-sm text-gray-500">Password must be at least 6 characters.</p>

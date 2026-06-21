@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard'
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="/saas-landing">
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 flex flex-col">
           <Navbar />
           <main className="flex-1">

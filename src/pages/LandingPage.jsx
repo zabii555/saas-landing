@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Rocket, Zap, Shield, Users, BarChart, Globe, Award, Star, CheckCircle, ArrowRight } from 'lucide-react'
+import { 
+  Rocket, Zap, Shield, Users, BarChart, Globe, Award, 
+  Star, CheckCircle, ArrowRight, Mail, Phone, MapPin 
+} from 'lucide-react'
 
 const LandingPage = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (formData.name && formData.email && formData.message) {
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3000)
+      setFormData({ name: '', email: '', message: '' })
+    }
+  }
+
   const features = [
     { icon: Rocket, title: 'Lightning Fast', desc: 'Built for speed with optimal performance' },
     { icon: Shield, title: 'Enterprise Security', desc: 'Bank-grade encryption for your data' },
@@ -32,24 +51,25 @@ const LandingPage = () => {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="pt-20 pb-16 md:pt-28 bg-gradient-to-br from-indigo-50 via-purple-50 to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Build Your SaaS<br />
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Faster & Smarter</span>
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-            Everything you need to launch and grow your SaaS product — from onboarding to analytics.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/onboarding" className="btn-primary flex items-center gap-2">
-              Start Free Trial <ArrowRight size={18} />
-            </Link>
-            <button className="btn-secondary">Watch Demo</button>
-          </div>
-        </div>
-      </section>
+      
+     {/* Hero */}
+<section className="pt-32 pb-20 md:pt-40 bg-gradient-to-br from-indigo-50 via-purple-50 to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+  <div className="max-w-7xl mx-auto px-4 text-center">
+    <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      Build Your SaaS<br />
+      <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Faster & Smarter</span>
+    </h1>
+    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
+      Everything you need to launch and grow your SaaS product — from onboarding to analytics.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <Link to="/onboarding" className="btn-primary flex items-center gap-2">
+        Start Free Trial <ArrowRight size={18} />
+      </Link>
+      <button className="btn-secondary">Watch Demo</button>
+    </div>
+  </div>
+</section>
 
       {/* Features */}
       <section className="py-16">
@@ -121,6 +141,64 @@ const LandingPage = () => {
                 <p className="text-gray-600 dark:text-gray-400 mt-1">{f.a}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== CONTACT SECTION (ADDED) ========== */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="section-title">Get In Touch</h2>
+          <div className="card">
+            {submitted ? (
+              <div className="text-center py-8">
+                <div className="text-4xl mb-4">✅</div>
+                <h3 className="text-2xl font-bold text-green-600">Thank You!</h3>
+                <p className="text-gray-600 dark:text-gray-400">Your message has been sent successfully.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Message</label>
+                  <textarea
+                    name="message"
+                    placeholder="Write your message..."
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full p-3 border rounded-lg dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn-primary w-full">
+                  Send Message <ArrowRight size={18} className="inline ml-2" />
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
